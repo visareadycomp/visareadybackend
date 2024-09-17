@@ -32,3 +32,4 @@ sudo docker rmi imageId
 
 ## To run the build image
 > sudo docker run -d --name visareadybackend -p 8000:8000 visaready/visareadybackend:latest
+
