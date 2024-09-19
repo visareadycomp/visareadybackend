@@ -3,7 +3,7 @@ const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 
 
-const getalldata=async(req,res)=>{
+const  getalldata=async(req,res)=>{
     try{
         const data= await user.find();
         res.status(200).send({message:"success",data:data});
@@ -27,9 +27,9 @@ const insertuser=async(req,res)=>{
 }
 
 const loginuser=async(req,res)=>{
-    const {email,password}=req.body
+    const {phone,password}=req.body
     try {
-        const userValid= await user.findOne({email})
+        const userValid= await user.findOne({phone})
         if(userValid){
             //match password
             const isValidPassword=bcrypt.compareSync(password,userValid.password);
@@ -37,7 +37,7 @@ const loginuser=async(req,res)=>{
                 //generate jwt
                 const token=jwt.sign({
                     userId:userValid._id,
-                    email:userValid.email
+                    phone:userValid.phone
                 },process.env.SECRET_KEY,{
                     expiresIn:60*60*24 // in sec => 60sec*60sec*24sec means 24 days
                 })
@@ -62,6 +62,8 @@ const getprofile=async(req,res)=>{
     const token=authorization.split(" ")[1];
     try{
         const userdata=jwt.verify(token,process.env.SECRET_KEY)
+        console.log(userdata);
+        
         const {userId}=userdata;
         
         user.findById(userId)

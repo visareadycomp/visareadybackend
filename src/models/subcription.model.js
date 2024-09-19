@@ -5,18 +5,30 @@ const userSchema = new Schema({
         type: String,
         unique: true
     },
-    phone: {
+    userId: {
+        type: String,
+    },
+    status: {
         type: String,
         required: true,
-        unique: true
+        default: active,
     },
-    password: {
-        type: String,
-        required: true
+    startDate: {
+        type: Date,
     },
-    subscription: {
+    endDate: {
+        type: Date,
+  
+    },
+    renewDate: {
+        type: Date,
+    },
+    autoRenew:{
         type: Boolean,
-        default: false
+        default: true,
+    },
+    paymentMethod:{
+        type: String,
     }
 }, { timestamps: true }); // This adds createdAt and updatedAt fields automatically
 
